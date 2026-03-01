@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>MySlap</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin:0;
+    background:#111;
+    color:white;
+}
+
+header{
+    background:#ff0080;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+header img{
+    height:50px;
+}
+
+nav{
+    background:#222;
+    padding:10px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    margin:15px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:20px;
+}
+
+.post{
+    background:#1e1e1e;
+    margin:20px;
+    padding:15px;
+    border-radius:10px;
+    width:360px;
+}
+
+iframe{
+    width:100%;
+    height:200px;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+button{
+    background:#ff0080;
+    border:none;
+    padding:8px 15px;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+    margin-right:5px;
+}
+
+.comments{
+    margin-top:10px;
+    max-height:150px;
+    overflow-y:auto;
+    background:#222;
+    padding:5px;
+    border-radius:5px;
+}
+
+.comment-input{
+    width:100%;
+    padding:5px;
+    margin-top:5px;
+    border-radius:5px;
+    border:none;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+<img src="https://i.imgur.com/TUw8M7f.png" alt="MySlap Logo">
+</header>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Trending</a>
+<a href="#">Upload</a>
+<a href="#">Profiel</a>
+<a href="#">Login/Register</a>
+</nav>
+
+<div class="container">
+
+<div class="post" id="post1">
+<h3>Mijn eerste video</h3>
+<iframe src="https://www.youtube.com/embed/FTQ8jRNT2hQ" title="YouTube Video" allowfullscreen></iframe>
+
+<div>
+<button onclick="likePost('post1')">👍 Like</button>
+<span id="post1-likes">0 likes</span>
+<button onclick="sharePost('post1')">🔗 Share</button>
+</div>
+
+<div class="comments" id="post1-comments">
+<!-- Comments verschijnen hier -->
+</div>
+<input class="comment-input" type="text" id="post1-comment-input" placeholder="Type hier je comment..." onkeypress="if(event.key==='Enter'){addComment('post1')}">
+</div>
+
+</div>
+
+<script>
+// Like systeem: 1 like per persoon per sessie
+let likedPosts = {};
+
+function likePost(postId){
+    if(likedPosts[postId]){
+        alert("Je kan deze video maar 1 keer liken!");
+        return;
+    }
+    likedPosts[postId] = true;
+    let likesElem = document.getElementById(postId + "-likes");
+    let currentLikes = parseInt(likesElem.innerText) || 0;
+    likesElem.innerText = (currentLikes + 1) + " likes";
+}
+
+// Comment systeem
+function addComment(postId){
+    let input = document.getElementById(postId + "-comment-input");
+    let text = input.value.trim();
+    if(text === "") return;
+    let commentsDiv = document.getElementById(postId + "-comments");
+    let commentElem = document.createElement("div");
+    commentElem.innerText = text;
+    commentsDiv.appendChild(commentElem);
+    input.value="";
+}
+
+// Share knop
+function sharePost(postId){
+    let url = window.location.href + "#" + postId;
+    navigator.clipboard.writeText(url).then(()=>{
+        alert("Link gekopieerd naar je clipboard!");
+    });
+}
+
+</script>
+
+</body>
+</html>
