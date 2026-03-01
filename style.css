@@ -1,13 +1,19 @@
-body { font-family: Arial, sans-serif; margin:0; background:#111; color:white; }
-header{ background:#ff0080; padding:15px; display:flex; align-items:center; justify-content:center; }
-header img{ height:50px; }
-nav{ background:#222; padding:10px; text-align:center; }
-nav a{ color:white; margin:15px; text-decoration:none; font-weight:bold; }
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+body { font-family: 'Fredoka One', cursive; margin:0; background:#121212; color:white; }
+header{ background:#222; padding:15px; display:flex; align-items:center; justify-content:center; }
+header .logo{ height:60px; }
+nav{ background:#333; padding:10px; text-align:center; }
+nav a{ color:#FFD700; margin:15px; text-decoration:none; font-weight:bold; }
+nav a:hover{ text-decoration:underline; }
 .container{ display:flex; flex-direction:column; align-items:center; padding:20px; max-width:800px; margin:auto; }
-.post{ background:#1e1e1e; margin:20px; padding:15px; border-radius:10px; width:100%; }
-iframe, video{ width:100%; border-radius:10px; margin-bottom:10px; }
-button{ background:#ff0080; border:none; padding:8px 15px; color:white; border-radius:5px; cursor:pointer; margin-right:5px; }
+.post{ background:#1E1E1E; margin:20px; padding:15px; border-radius:15px; width:100%; box-shadow: 0 0 10px #FFD700; }
+iframe, video, canvas{ width:100%; border-radius:10px; margin-bottom:10px; }
+button{ background:#FFD700; border:none; padding:8px 15px; color:#121212; border-radius:5px; cursor:pointer; margin-right:5px; font-weight:bold; transition: transform 0.2s; }
+button:hover{ transform: scale(1.1); }
 .comments{ margin-top:10px; max-height:150px; overflow-y:auto; background:#222; padding:5px; border-radius:5px; }
 .comment-input{ width:100%; padding:5px; margin-top:5px; border-radius:5px; border:none; }
-input, select { padding:5px; border-radius:5px; border:none; margin-right:5px; }
-.feed { width:100%; display:flex; flex-direction:column; } 
+input, select{ padding:5px; border-radius:5px; border:none; margin-right:5px; }
+.feed { width:100%; display:flex; flex-direction:column; }
+.like-emoji{ display:inline-block; animation: pop 0.3s; }
+@keyframes pop{ 0%{transform:scale(1);} 50%{transform:scale(1.5);} 100%{transform:scale(1);} } 
