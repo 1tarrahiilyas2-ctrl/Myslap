@@ -1,22 +1,99 @@
 import React, { useState } from "react"; import { Card, CardContent } from "@/components/ui/card"; import { Button } from "@/components/ui/button";
 
-export default function AdamasShop() { const [cart, setCart] = useState([]);
+export default function AdamasShop() { const [cart, setCart] = useState([]); const [page, setPage] = useState("home"); const [menuOpen, setMenuOpen] = useState(false);
 
-const products = [ { id: 1, name: "Hijab Beige", price: 25 }, { id: 2, name: "Hijab White", price: 25 }, { id: 3, name: "Premium Set", price: 60 }, ];
+const products = [ { id: 1, name: "Beige Hijab", price: 20 }, { id: 2, name: "White Hijab", price: 20 }, { id: 3, name: "Luxury Set", price: 20 }, { id: 4, name: "Soft Collection", price: 20 }, { id: 5, name: "Premium Beige", price: 20 }, { id: 6, name: "Classic White", price: 20 }, ];
 
 const addToCart = (product) => { setCart([...cart, product]); };
 
-return ( <div className="bg-[#f8f5f2] min-h-screen text-gray-800"> {/* HEADER */} <header className="bg-white shadow p-6 flex justify-between items-center"> <h1 className="text-3xl font-serif tracking-wide">ADAMAS</h1> <div> <Button variant="outline">Cart ({cart.length})</Button> </div> </header>
+const total = cart.reduce((sum, item) => sum + item.price, 0);
 
-{/* HERO BANNER */}
-  <section className="text-center py-16 px-4">
-    <h2 className="text-4xl font-serif mb-2">Uncovered Beauty, Covered Grace</h2>
-    <p className="text-gray-500">Elegant & Modest Fashion</p>
-  </section>
+return ( <div className="bg-[#f5f1eb] min-h-screen font-serif text-gray-800">
 
-  {/* PRODUCTS */}
-  <section className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-    {products.map((product) => (
-      <Card key={product.id} className="rounded-2xl shadow-sm">
-        <CardContent className="p-4 text-center">
-          <div className="bg-[#eae
+{/* HERO IMAGE */}
+  <div className="w-full h-[250px] bg-cover bg-center flex items-center justify-center" style={{backgroundImage: "url('https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf')"}}>
+    <div className="bg-white/60 backdrop-blur-sm p-4 text-center">
+      <h1 className="text-5xl tracking-widest">ADAMAS</h1>
+      <p className="text-sm">Uncovered Beauty, Covered Grace</p>
+    </div>
+  </div>
+
+  {/* NAVBAR */}
+  <div className="flex justify-center gap-4 py-4 relative">
+    <Button variant="outline" className="rounded-full px-6" onClick={() => setPage("home")}>Home</Button>
+    <Button variant="outline" className="rounded-full px-6" onClick={() => setPage("checkout")}>Checkout</Button>
+    <Button variant="outline" className="rounded-full px-6" onClick={() => setPage("cart")}>Shopping cart</Button>
+
+    {/* MENU ICON */}
+    <div className="absolute right-6 top-4 cursor-pointer" onClick={() => setMenuOpen(!menuOpen)}>
+      ☰
+    </div>
+
+    {/* DROPDOWN MENU */}
+    {menuOpen && (
+      <div className="absolute right-6 top-12 bg-white shadow rounded-xl p-4 flex flex-col gap-2">
+        <button onClick={() => {setPage("home"); setMenuOpen(false)}}>Home</button>
+        <button onClick={() => {setPage("cart"); setMenuOpen(false)}}>Shopping cart</button>
+        <button onClick={() => {setPage("checkout"); setMenuOpen(false)}}>Checkout</button>
+      </div>
+    )}
+  </div>
+
+  {/* HOME PAGE */}
+  {page === "home" && (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-10 pb-10">
+      {products.map((product) => (
+        <Card key={product.id} className="border rounded-xl">
+          <CardContent className="p-0">
+            <div className="h-48 bg-[#e8e1d8]"></div>
+            <div className="p-3 flex justify-between items-center">
+              <span>€{product.price}</span>
+              <div className="flex gap-2">
+                <Button size="sm" onClick={() => addToCart(product)}>Cart</Button>
+                <Button size="sm" variant="outline" onClick={() => {addToCart(product); setPage("checkout")}}>Buy</Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  )}
+
+  {/* CART PAGE */}
+  {page === "cart" && (
+    <div className="p-10">
+      <h2 className="text-2xl mb-4">Shopping Cart</h2>
+      {cart.length === 0 ? (
+        <p>Your cart is empty</p>
+      ) : (
+        <div>
+          {cart.map((item, index) => (
+            <div key={index} className="flex justify-between border-b py-2">
+              <span>{item.name}</span>
+              <span>€{item.price}</span>
+            </div>
+          ))}
+          <p className="mt-4 font-semibold">Total: €{total}</p>
+        </div>
+      )}
+    </div>
+  )}
+
+  {/* CHECKOUT PAGE */}
+  {page === "checkout" && (
+    <div className="p-10 max-w-xl mx-auto">
+      <h2 className="text-2xl mb-4">Checkout</h2>
+      <input className="w-full border p-2 mb-3" placeholder="Full Name" />
+      <input className="w-full border p-2 mb-3" placeholder="Address" />
+      <input className="w-full border p-2 mb-3" placeholder="Email" />
+      <Button className="w-full mt-2">Pay €{total}</Button>
+    </div>
+  )}
+
+  {/* FOOTER */}
+  <footer className="text-center py-6 text-gray-500">
+    © 2026 ADAMAS
+  </footer>
+</div>
+
+); }
