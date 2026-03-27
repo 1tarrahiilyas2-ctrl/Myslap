@@ -1,50 +1,22 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-<meta charset="UTF-8">
-<title>MySlap</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+import React, { useState } from "react"; import { Card, CardContent } from "@/components/ui/card"; import { Button } from "@/components/ui/button";
 
-<header>
-<img src="logo.png" alt="MySlap Logo" class="logo">
-</header>
+export default function AdamasShop() { const [cart, setCart] = useState([]);
 
-<nav>
-<a href="#" onclick="showFeed()">Home</a>
-<a href="#" onclick="showTrending()">Trending</a>
-<a href="#" onclick="showUpload()">Upload</a>
-<a href="#" onclick="showLogin()">Login/Register</a>
-</nav>
+const products = [ { id: 1, name: "Hijab Beige", price: 25 }, { id: 2, name: "Hijab White", price: 25 }, { id: 3, name: "Premium Set", price: 60 }, ];
 
-<div class="container" id="mainContainer">
+const addToCart = (product) => { setCart([...cart, product]); };
 
-<!-- Login/Register -->
-<div id="loginDiv">
-<h3>Login / Register</h3>
-<input type="text" id="usernameInput" placeholder="Gebruikersnaam">
-<button onclick="login()">Login / Register</button>
-<p id="loginMsg"></p>
-</div>
+return ( <div className="bg-[#f8f5f2] min-h-screen text-gray-800"> {/* HEADER */} <header className="bg-white shadow p-6 flex justify-between items-center"> <h1 className="text-3xl font-serif tracking-wide">ADAMAS</h1> <div> <Button variant="outline">Cart ({cart.length})</Button> </div> </header>
 
-<!-- Upload -->
-<div id="uploadDiv" style="display:none;">
-<h3>Nieuwe Post Uploaden</h3>
-<button onclick="startCamera()">📹 Video opnemen</button>
-<button onclick="takePhoto()">📸 Foto maken</button>
-<input type="file" id="fileInput" accept="video/*,image/*">
-<input type="text" id="mood" placeholder="Mood: 😎">
-<button onclick="uploadPost()">Upload</button>
-<video id="cameraVideo" autoplay muted style="display:none;" width="320" height="240"></video>
-<canvas id="photoCanvas" style="display:none;"></canvas>
-</div>
+{/* HERO BANNER */}
+  <section className="text-center py-16 px-4">
+    <h2 className="text-4xl font-serif mb-2">Uncovered Beauty, Covered Grace</h2>
+    <p className="text-gray-500">Elegant & Modest Fashion</p>
+  </section>
 
-<!-- Feed -->
-<div class="feed" id="feedDiv" style="display:none;"></div>
-
-</div>
-
-<script src="script.js"></script>
-</body>
-</html> 
+  {/* PRODUCTS */}
+  <section className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+    {products.map((product) => (
+      <Card key={product.id} className="rounded-2xl shadow-sm">
+        <CardContent className="p-4 text-center">
+          <div className="bg-[#eae
