@@ -1,71 +1,95 @@
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Smartschool — Planner Demo</title>
+<title>Planner System</title>
 <style>
-:root{color-scheme:dark;--cyan:#55e6ff;--green:#25d366;--muted:#8ca3b4}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#122b3b,#05090e 65%);font-family:Arial,sans-serif;color:#eefaff;display:grid;place-items:center;padding:18px}
-.panel{width:min(100%,470px);border:1px solid #214253;border-radius:24px;background:#08131cef;box-shadow:0 20px 70px #0009;padding:22px}
-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e3947;padding-bottom:14px}
-.brand{font-weight:800;letter-spacing:2px;color:var(--cyan)}.tag{font-size:10px;color:#a6f4bd;border:1px solid #276b4b;border-radius:20px;padding:6px 9px}
-h1{font-size:26px;margin:22px 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 20px}
-label{display:block;color:#b6ceda;font-size:12px;margin:14px 0 7px}
-input{width:100%;background:#03090e;border:1px solid #315262;border-radius:12px;padding:14px;color:white;font-size:18px;letter-spacing:5px;outline:none}
-button{width:100%;border:0;border-radius:12px;padding:14px;font-size:14px;font-weight:700;margin-top:12px;cursor:pointer;background:var(--cyan);color:#041018}
-button.secondary{background:#132b38;color:#d9f7ff;border:1px solid #315262}button.danger{background:#df5268;color:white}
-.hidden{display:none}.device{display:flex;gap:14px;align-items:center;background:#0d202b;border:1px solid #1c3c4b;border-radius:16px;padding:14px;margin:18px 0}
-.phone{font-size:34px}.muted{color:var(--muted);font-size:12px}
-#status{font-size:13px;color:var(--cyan);margin-top:12px;min-height:18px}
-.planner{margin-top:16px;background:#0b1822;border:1px solid #1d3946;border-radius:15px;padding:13px}
-.week{display:flex;justify-content:space-between;gap:8px;color:#a9c4d2;font-size:12px;margin-bottom:12px}
-.day{font-size:11px;color:#9ab0be;margin-bottom:8px}
-.lesson{background:#b8eaf4;color:#174052;border-radius:9px;padding:12px;margin:8px 0;font-size:13px;line-height:1.45}
-.lesson.target{background:#fff0d5;color:#70410c;border:2px solid #e9a13d}
-.lesson.removed{opacity:.25;text-decoration:line-through;filter:grayscale(1)}
-.console{font:12px/1.55 ui-monospace,monospace;color:#a9d9e7;background:#030a10;border:1px solid #1d3946;border-radius:12px;padding:12px;margin-top:14px;min-height:80px;white-space:pre-wrap}
-.notice{font-size:11px;color:#7893a3;text-align:center;line-height:1.5;margin-top:18px}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #080d12;
+  color: #00ff88;
+  font-family: Consolas, monospace;
+}
+header {
+  padding: 22px;
+  background: #101b20;
+  border-bottom: 1px solid #00ff88;
+}
+h1 { text-shadow: 0 0 12px #00ff88; }
+main { padding: 20px; }
+.panel {
+  background: #101a20;
+  border: 1px solid #00ff88;
+  padding: 18px;
+  margin: 15px 0;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #00ff8822;
+}
+.status { color: #00ff88; }
+button {
+  background: #00ff88;
+  color: #07110b;
+  border: none;
+  padding: 12px 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+button:hover { background: white; }
+.item {
+  padding: 12px;
+  border-bottom: 1px solid #254438;
+}
 </style>
 </head>
 <body>
-<main class="panel">
-<header><div class="brand">◈ SMARTSCHOOL</div><div class="tag">PLANNER DEMO</div></header>
-<section id="login">
-<h1>PLANNER ACCESS</h1>
-<p class="sub">KNMC • Beveiligde demo-omgeving</p>
-<label for="pass">TOEGANGSCODE</label>
-<input id="pass" type="password" inputmode="numeric" maxlength="12" placeholder="••••••">
-<button id="unlock">OPEN PLANNER</button>
-<div id="status" role="status"></div>
-</section>
-<section id="dashboard" class="hidden">
-<h1>Mijn planner</h1>
-<p class="sub">Week 46 • 9–13 november 2026</p>
-<div class="device"><div class="phone">📅</div><div><b>KNMC — Weekplanner</b><div class="muted">DINSDAG 10 NOVEMBER</div><div style="color:#62e89a;font-size:12px;margin-top:4px">● Planner geladen</div></div></div>
-<div class="planner">
-<div class="week"><span>‹ Vorige week</span><b>9 – 13 nov 2026</b><span>Volgende ›</span></div>
-<div class="day">DINSDAG 10 NOVEMBER</div>
-<div class="lesson"><b>08:25–09:15 • BEO</b><br>Level 6</div>
-<div class="lesson"><b>09:15–10:05 • NWT</b><br>Extra oefeningen</div>
-<div class="lesson"><b>10:20–11:10 • WIS</b><br>Wiskunde</div>
-<div class="lesson target" id="target"><b>13:00–13:50 • NED</b><br>VRT JOURNAAL<br><small>Mevr. Van Dijck</small></div>
-</div>
-<div class="console" id="console">user@knmc:~$ planner --open
-[OK] Demo-planner geladen.
-[READY] Nederlands-item geselecteerd.</div>
-<button class="danger" id="remove">VERWIJDER NEDERLANDS-ITEM</button>
-<button class="secondary" id="lock">LOCK PLANNER</button>
-</section>
-<p class="notice">SMARTSCHOOL • INTERACTIEVE SIMULATIE • Wijzigt geen echte Smartschool-planner of schoolgegevens.</p>
+
+<header>
+  <h1>▣ PLANNER SYSTEM</h1>
+  <p>SMARTSCHOOL // LOCAL DEMO</p>
+  <p class="status">● SYSTEM ONLINE</p>
+</header>
+
+<main>
+  <div class="panel">
+    <h2>USER INFORMATION</h2>
+    <p>School: KNMC</p>
+    <p>Week: 23 - 27 november 2026</p>
+    <p>Status: Connected to demo</p>
+  </div>
+
+  <div class="panel">
+    <h2>PLANNER</h2>
+    <div class="item">Maandag 23 november</div>
+    <div class="item">Dinsdag 24 november</div>
+    <div class="item">Woensdag 25 november</div>
+    <div class="item">Donderdag 26 november</div>
+    <div class="item">Vrijdag 27 november</div>
+  </div>
+
+  <div class="panel">
+    <h2>TO-DO LIST</h2>
+    <div class="item">M4: opdrachten afwerken</div>
+    <div class="item">Engels: studeren</div>
+    <div class="item">Frans: vocabulaire</div>
+  </div>
+
+  <div class="panel">
+    <h2>SYSTEM LOG</h2>
+    <p id="log">Waiting for command...</p>
+    <button onclick="runSystem()">RUN SYSTEM</button>
+  </div>
 </main>
+
 <script>
-const login=document.getElementById('login'),dash=document.getElementById('dashboard'),pass=document.getElementById('pass'),status=document.getElementById('status');
-function unlock(){if(pass.value==='150318'){login.classList.add('hidden');dash.classList.remove('hidden')}else{status.textContent='Toegang geweigerd — probeer opnieuw.';pass.value=''}}
-document.getElementById('unlock').addEventListener('click',unlock);
-pass.addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
-document.getElementById('remove').addEventListener('click',()=>{document.getElementById('target').classList.add('removed');document.getElementById('console').textContent+='\\n[SIMULATIE] Nederlands-item verwijderd uit deze demo.';document.getElementById('remove').disabled=true;document.getElementById('remove').textContent='ITEM VERWIJDERD (DEMO)'});
-document.getElementById('lock').addEventListener('click',()=>{dash.classList.add('hidden');login.classList.remove('hidden');pass.value='';status.textContent=''});
+function runSystem() {
+  document.getElementById("log").innerHTML =
+    "Demo planner bijgewerkt. Geen echte Smartschool-data gewijzigd.";
+}
 </script>
+
 </body>
 </html>
