@@ -4,90 +4,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Planner System</title>
+<title>Planner Control</title>
 <style>
-* { box-sizing: border-box; }
 body {
-  margin: 0;
-  background: #080d12;
-  color: #00ff88;
-  font-family: Consolas, monospace;
+  background:#10151f;
+  color:white;
+  font-family:Arial,sans-serif;
+  padding:20px;
 }
-header {
-  padding: 22px;
-  background: #101b20;
-  border-bottom: 1px solid #00ff88;
-}
-h1 { text-shadow: 0 0 12px #00ff88; }
-main { padding: 20px; }
+h1 {color:#00ff88}
 .panel {
-  background: #101a20;
-  border: 1px solid #00ff88;
-  padding: 18px;
-  margin: 15px 0;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #00ff8822;
+  background:#202938;
+  padding:20px;
+  border-radius:12px;
+  margin:15px 0;
 }
-.status { color: #00ff88; }
+.test {
+  background:#303d50;
+  padding:15px;
+  border-radius:8px;
+}
 button {
-  background: #00ff88;
-  color: #07110b;
-  border: none;
-  padding: 12px 18px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
+  background:#00d982;
+  color:#07140e;
+  border:0;
+  padding:13px;
+  border-radius:7px;
+  font-weight:bold;
+  margin-top:12px;
+  cursor:pointer;
 }
-button:hover { background: white; }
-.item {
-  padding: 12px;
-  border-bottom: 1px solid #254438;
-}
+.status {color:#00ff88}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>▣ PLANNER SYSTEM</h1>
-  <p>SMARTSCHOOL // LOCAL DEMO</p>
-  <p class="status">● SYSTEM ONLINE</p>
-</header>
+<h1>PLANNER CONTROL</h1>
+<p class="status">● DEMO SYSTEM ONLINE</p>
 
-<main>
-  <div class="panel">
-    <h2>USER INFORMATION</h2>
-    <p>School: KNMC</p>
-    <p>Week: 23 - 27 november 2026</p>
-    <p>Status: Connected to demo</p>
-  </div>
+<div class="panel">
+<h2>Nederlandse planner</h2>
+<p>Donderdag 26 november 2026</p>
 
-  <div class="panel">
-    <h2>PLANNER</h2>
-    <div class="item">Maandag 23 november</div>
-    <div class="item">Dinsdag 24 november</div>
-    <div class="item">Woensdag 25 november</div>
-    <div class="item">Donderdag 26 november</div>
-    <div class="item">Vrijdag 27 november</div>
-  </div>
+<div class="test" id="dutchTest">
+  <h3>Actuatoets Nederlands</h3>
+  <p>09:15 - 10:05</p>
+  <p>Lokaal: G_A208</p>
+  <p>Leerkracht: Antonia Van Dijck</p>
+</div>
 
-  <div class="panel">
-    <h2>TO-DO LIST</h2>
-    <div class="item">M4: opdrachten afwerken</div>
-    <div class="item">Engels: studeren</div>
-    <div class="item">Frans: vocabulaire</div>
-  </div>
+<button onclick="removeTest()">
+VERWIJDER ACTUATOETS
+</button>
 
-  <div class="panel">
-    <h2>SYSTEM LOG</h2>
-    <p id="log">Waiting for command...</p>
-    <button onclick="runSystem()">RUN SYSTEM</button>
-  </div>
-</main>
+<p id="status"></p>
+</div>
 
 <script>
-function runSystem() {
-  document.getElementById("log").innerHTML =
-    "Demo planner bijgewerkt. Geen echte Smartschool-data gewijzigd.";
+function removeTest() {
+  const test = document.getElementById("dutchTest");
+
+  if (test) {
+    test.remove();
+    document.getElementById("status").textContent =
+      "Actuatoets verwijderd uit de lokale demo.";
+  }
 }
 </script>
 
