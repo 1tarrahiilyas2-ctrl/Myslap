@@ -3,73 +3,345 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Planner Control</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smartschool Planner Demo</title>
 <style>
-body {
-  background:#10151f;
-  color:white;
-  font-family:Arial,sans-serif;
-  padding:20px;
+:root {
+ --cyan:#55e6ff;
+ --green:#25d366;
+ --muted:#8ca3b4;
 }
-h1 {color:#00ff88}
-.panel {
-  background:#202938;
-  padding:20px;
-  border-radius:12px;
-  margin:15px 0;
+*{box-sizing:border-box}
+body{
+ margin:0;
+ padding:15px;
+ background:radial-gradient(circle at top,#122b3b,#05090e 70%);
+ font-family:Arial,sans-serif;
+ color:#eefaff;
 }
-.test {
-  background:#303d50;
-  padding:15px;
-  border-radius:8px;
+.panel{
+ width:min(100%,900px);
+ margin:auto;
+ background:#08131cef;
+ border:1px solid #214253;
+ border-radius:20px;
+ padding:18px;
+ box-shadow:0 20px 70px #0009;
 }
-button {
-  background:#00d982;
-  color:#07140e;
-  border:0;
-  padding:13px;
-  border-radius:7px;
-  font-weight:bold;
-  margin-top:12px;
-  cursor:pointer;
+header{
+ display:flex;
+ justify-content:space-between;
+ border-bottom:1px solid #1e3947;
+ padding-bottom:14px;
 }
-.status {color:#00ff88}
+.brand{color:var(--cyan);font-weight:bold;letter-spacing:2px}
+.tag{color:#a6f4bd;font-size:11px}
+h1{font-size:25px;margin:22px 0 5px}
+.sub{color:var(--muted);font-size:13px}
+input{
+ width:100%;
+ padding:14px;
+ border-radius:10px;
+ background:#03090e;
+ color:white;
+ border:1px solid #315262;
+}
+button{
+ border:0;
+ border-radius:10px;
+ padding:13px;
+ font-weight:bold;
+ cursor:pointer;
+ background:var(--cyan);
+ color:#041018;
+ margin-top:12px;
+}
+button.danger{background:#df5268;color:white}
+button.secondary{
+ background:#132b38;
+ color:white;
+ border:1px solid #315262;
+}
+.hidden{display:none}
+#status{color:var(--cyan);font-size:13px}
+.planner{
+ margin-top:20px;
+ padding:12px;
+ background:#0b1822;
+ border:1px solid #1d3946;
+ border-radius:14px;
+ overflow-x:auto;
+}
+.week{
+ display:flex;
+ justify-content:space-between;
+ gap:8px;
+ font-size:13px;
+ margin-bottom:15px;
+ color:#b6ceda;
+}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(5,minmax(125px,1fr));
+ gap:7px;
+ min-width:650px;
+}
+.day{
+ background:#101f2a;
+ border-radius:9px;
+ padding:9px;
+ min-height:300px;
+}
+.day-title{
+ font-size:12px;
+ color:var(--cyan);
+ border-bottom:1px solid #315262;
+ padding-bottom:9px;
+ margin-bottom:10px;
+}
+.lesson{
+ background:#b8eaf4;
+ color:#174052;
+ border-radius:8px;
+ padding:9px;
+ margin:8px 0;
+ font-size:11px;
+ line-height:1.5;
+}
+.lesson.target{
+ background:#fff0d5;
+ color:#70410c;
+ border:2px solid #e9a13d;
+}
+.lesson.removed{
+ display:none;
+}
+.time{
+ font-size:10px;
+ color:#7893a3;
+}
+.todo{
+ margin-top:15px;
+ background:#0d202b;
+ padding:14px;
+ border-radius:12px;
+}
+.console{
+ font:12px/1.6 monospace;
+ color:#a9d9e7;
+ background:#030a10;
+ border:1px solid #1d3946;
+ padding:13px;
+ border-radius:10px;
+ margin-top:15px;
+ white-space:pre-wrap;
+}
+.notice{
+ text-align:center;
+ color:#7893a3;
+ font-size:11px;
+ margin-top:18px;
+}
 </style>
 </head>
 <body>
+<main class="panel">
 
-<h1>PLANNER CONTROL</h1>
-<p class="status">● DEMO SYSTEM ONLINE</p>
+<header>
+ <div class="brand">◈ SMARTSCHOOL</div>
+ <div class="tag">PLANNER DEMO</div>
+</header>
 
-<div class="panel">
-<h2>Nederlandse planner</h2>
-<p>Donderdag 26 november 2026</p>
+<section id="login">
+ <h1>PLANNER ACCESS</h1>
+ <p class="sub">KNMC • Beveiligde demo-omgeving</p>
+ <p>TOEGANGSCODE</p>
+ <input id="pass" type="password"
+ placeholder="Toegangscode">
+ <button id="unlock">OPEN PLANNER</button>
+ <p id="status"></p>
+</section>
 
-<div class="test" id="dutchTest">
-  <h3>Actuatoets Nederlands</h3>
-  <p>09:15 - 10:05</p>
-  <p>Lokaal: G_A208</p>
-  <p>Leerkracht: Antonia Van Dijck</p>
+<section id="dashboard" class="hidden">
+
+<h1>Mijn planner</h1>
+<p class="sub">Week 23 – 27 november 2026</p>
+
+<div class="planner">
+ <div class="week">
+  <span>‹ Vorige week</span>
+  <b>23 – 27 NOV 2026</b>
+  <span>Volgende ›</span>
+ </div>
+
+ <div class="grid">
+
+  <div class="day">
+   <div class="day-title">MAANDAG 23</div>
+   <div class="lesson">
+    <b>08:25–09:15 • WIS</b><br>
+    G_A208
+   </div>
+   <div class="lesson">
+    <b>09:15–10:05 • ENG</b><br>
+    G_A208
+   </div>
+   <div class="lesson">
+    <b>10:20–11:10 • TEC</b><br>
+    G_D102
+   </div>
+  </div>
+
+  <div class="day">
+   <div class="day-title">DINSDAG 24</div>
+   <div class="lesson">
+    <b>08:25–09:15 • BEO</b><br>
+    G_A208
+   </div>
+   <div class="lesson">
+    <b>09:15–10:05 • NWT</b><br>
+    G_A101
+   </div>
+   <div class="lesson">
+    <b>13:00–13:50 • NED</b><br>
+    Actua
+   </div>
+  </div>
+
+  <div class="day">
+   <div class="day-title">WOENSDAG 25</div>
+   <div class="lesson">
+    <b>08:25–09:15 • WIS</b><br>
+    G_A208
+   </div>
+   <div class="lesson">
+    <b>09:15–10:05 • ENG</b><br>
+    G_A208
+   </div>
+   <div class="lesson">
+    <b>10:20–11:10 • WIS</b><br>
+    G_A208
+   </div>
+  </div>
+
+  <div class="day">
+   <div class="day-title">DONDERDAG 26</div>
+
+   <div class="lesson">
+    <b>08:25–09:15 • WIS</b><br>
+    G_A208
+   </div>
+
+   <div class="lesson target" id="actua">
+    <b>09:15–10:05 • NED</b><br>
+    ACTUATOETS<br>
+    <small>Antonia Van Dijck</small><br>
+    <small>G_A208</small>
+   </div>
+
+   <div class="lesson">
+    <b>10:20–11:10 • AAR</b><br>
+    G_A208
+   </div>
+  </div>
+
+  <div class="day">
+   <div class="day-title">VRIJDAG 27</div>
+   <div class="lesson">
+    <b>08:25–09:15 • GES</b><br>
+    G_A208
+   </div>
+   <div class="lesson">
+    <b>09:15–10:05 • BEO</b><br>
+    G_A208
+   </div>
+   <div class="lesson">
+    <b>13:45–14:35 • NED</b><br>
+    G_A208
+   </div>
+  </div>
+
+ </div>
 </div>
 
-<button onclick="removeTest()">
-VERWIJDER ACTUATOETS
-</button>
-
-<p id="status"></p>
+<div class="todo">
+ <h3>Eigen to-do</h3>
+ <p class="sub">23 nov – 27 dec 2026</p>
+ <p>📘 M4: opdrachten afwerken</p>
+ <p>📗 Engels: studeren</p>
+ <p>📙 Frans: vocabulaire</p>
 </div>
+
+<div class="todo">
+ <h3>TOETSBEHEER</h3>
+ <p>Geselecteerde toets: Actuatoets Nederlands</p>
+ <p class="sub">Donderdag 26 november • 09:15–10:05</p>
+ <button class="danger" id="remove">
+ VERWIJDER ACTUATOETS
+ </button>
+ <p id="result"></p>
+</div>
+
+<div class="console" id="console">user@knmc:~$ planner --open
+[OK] Demo-planner geladen.
+[READY] Week 23-27 november.</div>
+
+<button class="secondary" id="lock">LOCK PLANNER</button>
+
+</section>
+
+<p class="notice">
+SMARTSCHOOL • INTERACTIEVE LOKALE DEMO
+</p>
+</main>
 
 <script>
-function removeTest() {
-  const test = document.getElementById("dutchTest");
+const login=document.getElementById('login');
+const dash=document.getElementById('dashboard');
+const pass=document.getElementById('pass');
 
-  if (test) {
-    test.remove();
-    document.getElementById("status").textContent =
-      "Actuatoets verwijderd uit de lokale demo.";
-  }
+function unlock(){
+ if(pass.value==='150318'){
+  login.classList.add('hidden');
+  dash.classList.remove('hidden');
+ }else{
+  document.getElementById('status').textContent=
+  'Toegang geweigerd.';
+  pass.value='';
+ }
 }
+
+document.getElementById('unlock').onclick=unlock;
+
+pass.addEventListener('keydown',e=>{
+ if(e.key==='Enter')unlock();
+});
+
+document.getElementById('remove').onclick=()=>{
+ const test=document.getElementById('actua');
+
+ if(test){
+  test.remove();
+
+  document.getElementById('result').textContent=
+  'Actuatoets verwijderd uit de lokale demo.';
+
+  document.getElementById('console').textContent+=
+  '\n[DEMO] Actuatoets Nederlands verwijderd.';
+
+  document.getElementById('remove').textContent=
+  'VERWIJDERD UIT DEMO';
+
+  document.getElementById('remove').disabled=true;
+ }
+};
+
+document.getElementById('lock').onclick=()=>{
+ dash.classList.add('hidden');
+ login.classList.remove('hidden');
+ pass.value='';
+ document.getElementById('status').textContent='';
+};
 </script>
 
 </body>
